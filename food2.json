@@ -1,0 +1,118 @@
+
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+    "width": 810,
+    "height": 400,
+    "title": "Calories Vs Serving size of common food",
+    "data": {
+        "url": "inflam.csv"
+    },
+    
+    "transform": [
+    ],
+    "encoding": {
+        "x": {
+            "field": "Calories",
+            "type": "quantitative",
+            "title": "Calories",
+            "scale": {
+                "domain": [
+                    0,
+                    600
+                ]
+            }
+        },
+        "y": {
+            "field": "Serving",
+            "title": "Serving Size",
+            "type": "quantitative",
+            "scale": {
+                "domain": [
+                    -10,
+                    350
+                ]
+            }
+        }
+    },
+    "layer": [
+        {
+            "mark": "circle",
+            "encoding": {
+                "size": {
+                    "field": "Inflamatory",
+                    "type": "ordinal",
+                    "title": "Inflamatory rating",
+                    "scale": {
+                        "type": "sequential",
+                        "domain": [
+                            "Very low","Low","Medium","High","Very high"
+                        ],
+                        "range": [
+                            100,500,2000
+                        ]
+                    }
+                },
+                "color": {
+                    "field": "Food",
+                    "type": "nominal",
+                    "scale": {"range":["black","blue","green","lime","cyan","red","DarkRed","orange","DeepPink","Purple","#DC143C","#B22222","DarkOliveGreen","DarkSalmon","GreenYellow","Indigo","MediumPruple", "MidnightBlue","MediumSpringGreen","HotPink","CornflowerBlue","DarkGoldenRod","Crimson"]}
+
+                },
+                "tooltip": [
+                    {
+                        "field": "Food",
+                        "type": "nominal",
+                        "title": "Food"
+                    },
+                   
+                    {
+                        "field": "Calories",
+                        "type": "quantitative"
+                    },
+                    {
+                        "field": "Serving",
+                        "type": "quantitative",
+                        "title": "Serving size in g"
+                    },
+                    {
+                        "field": "Inflamatory",
+                        "type": "nominal",
+                        "title": "Inflamatory rate"
+                    }
+                ]
+            }
+        },
+        {
+            "mark": {
+                "type": "text",
+                "align": "left",
+                "baseline": "middle",
+                "dx": 100,
+                "fontSize": 100
+            }
+        }
+    ],
+    "config": {
+        "view": {
+            "stroke": null
+        },
+        "axis": {
+            "labelFont": "sans-serif",
+            "titleFont": "sans-serif",
+            "titleFontSize":14
+        },
+        "legend": {
+            "labelFont": "sans-serif",
+            "titleFont": "sans-serif"
+        },
+        "header": {
+            "labelFont": "sans-serif",
+            "titleFont": "sans-serif"
+        },
+        "title": {
+            "font": "sans-serif",
+            "fontSize": 20,
+            "fontWeight": 600
+        }
+    }
+}

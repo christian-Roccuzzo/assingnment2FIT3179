@@ -1,0 +1,108 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+    "width": 450,
+    "height": 400,
+    "title": "Leading causes of death (1990-2010)",
+    "data": {
+        "url": "death_good.csv"
+    },
+    
+    "encoding": {
+        "x": {
+            "field": "Year",
+            "type": "temporal",
+            "title": "Year"
+        },
+        "y": {
+            "field": "Amount",
+            "type": "quantitative",
+            "title": "Total Deaths"
+        },
+        "color": {
+            "condition": {
+                "selection": "hover",
+                "field": "Death",
+                "type": "nominal",
+                "legend":"Death",
+                "title":"Cause of Death",
+                "scale": {"range":["#0000FF","#D2691E","#4B0082","#DAA520","#B22222","#008000","#E9967A","#1E90FF","#DC143C","#556B2F", "#696969","#8B0000","#00FFFF","DeepPink","Gold","Black","Lime","Purple"]}
+            },
+            "value": "grey"
+        },
+        "opacity": {
+            "condition": {
+                "selection": "hover",
+                "value": 1
+            },
+            "value": 0.01
+        }
+    },
+    "legend": {"format": ".1s"},
+    "layer": [
+        {
+            "description": "transparent layer to make it easier to trigger selection",
+            "selection": {
+                "hover": {
+                    "type": "single",
+                    "on": "mouseover",
+                    "empty": "all",
+                    "fields": [
+                        "Death"
+                    ]
+                }
+            },
+            "mark": {
+                "type": "bar",
+                "point": true,
+                "strokeWidth": 30,
+                "stroke": "transparent"
+            },
+            "encoding": {
+                "tooltip": [
+                    {
+                        "field": "Death",
+                        "type": "nominal"
+                    },
+                    {
+                        "field": "Year",
+                        "type": "temporal",
+                        "timeUnit": "year",
+                        "title": "Year"
+                    },
+                    {
+                        "field": "Amount",
+                        "type": "quantitative",
+                        "title":"Total deaths from cause "
+                    }
+                ]
+            }
+        },
+        {
+            "mark": "bar"
+        }
+        
+    ],
+    "config": {
+        "view": {
+            "stroke": null
+        },
+        "axis": {
+            "labelFont": "sans-serif",
+            "titleFont": "sans-serif",
+            "titleFontSize":14
+        },
+        "legend": {
+            "labelFont": "sans-serif",
+            "titleFont": "sans-serif"
+        },
+        "header": {
+            "labelFont": "sans-serif",
+            "titleFont": "sans-serif"
+        },
+        "title": {
+            "font": "sans-serif",
+            "fontSize": 20,
+            "fontWeight": 600
+        }
+    }
+}

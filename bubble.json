@@ -1,0 +1,186 @@
+
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+    "width": 800,
+    "height": 525,
+    "title": "Daily caloire consumption (per capita) vs Percentage of population Obese or Overweight",
+    "data": {
+        "url": "obese_vs_cals.csv"
+    },
+    "params": [
+        {
+            "name": "Year",
+            "value": 1990,
+            "bind": {
+                "input": "range",
+                "min": 1990,
+                "max": 2019,
+                "step": 1,
+                "name": "Select year: "
+                
+            }
+        },
+        {
+            "name": "Continent_selection",
+            "bind": {
+                "input": "select",
+                "options": [
+                null,
+                "North America",
+                "South America",
+                "Europe",
+                "Africa",
+                "Asia",
+                "Oceania"
+                ],
+                "labels":[
+                "Show All",
+                "North America",
+                "South America",
+                "Europe",
+                "Africa",
+                "Asia",
+                "Oceania"
+                ],
+                "name": "Continent Selection: "
+                }
+        }
+    ],
+    "transform": [
+        {
+            "filter": "datum.Year==Year"
+        },
+        {"filter": "Continent_selection == null || datum.Continent == Continent_selection"}
+
+    ],
+    "encoding": {
+        "x": {
+            "field": "Calories",
+            "type": "quantitative",
+            "title": "Daily calories consumed per capita",
+            "scale": {
+                "domain": [
+                    1300,
+                    4000
+                ]
+            }
+        },
+        "y": {
+            "field": "Obese",
+            "title": "Percent Obese or Overweight",
+            "type": "quantitative",
+            "scale": {
+                "domain": [
+                    0,
+                    80
+                ]
+            }
+        }
+    },
+    "layer": [
+        {
+            "mark": "circle",
+            "encoding": {
+                "size": {
+                    "field": "Death",
+                    "title":"Death rate from obesity %",
+                    "type": "quantitative",
+                    "scale": {
+                        "type": "sequential",
+                        "domain": [
+                            0,
+                            4,
+                            8,
+                            12,
+                            17,
+                            18,
+                            22
+                        ],
+                        "range": [
+                            50,
+                            150,
+                            300,
+                            600,
+                            1200
+                        ]
+                    }
+                },
+                "color": {
+                    "field": "Continent",
+                    "type": "nominal"
+                },
+                "tooltip": [
+                    {
+                        "field": "Entity",
+                        "type": "nominal",
+                        "title": "Country"
+                    },
+                    {
+                        "field": "Continent",
+                        "type": "nominal"
+                    },
+                    {
+                        "field": "Year",
+                        "type": "quantitative"
+                    },
+                    {
+                        "field": "Calories",
+                        "type": "quantitative",
+                        "title":"Daily caloric consumption"
+                    },
+                    {
+                        "field": "Obese",
+                        "type": "quantitative",
+                        "title": "Percent Obese or Overweight"
+                    },
+                    {
+                        "field": "Death",
+                        "type": "quantitative",
+                        "title": "Death rate from obesity"
+                    }
+                ]
+            }
+        },
+        {
+            "mark": {
+                "type": "text",
+                "align": "left",
+                "baseline": "middle",
+                "dx": 10,
+                "fontSize": 11
+            },
+            "encoding": {
+                "text": {
+                    "field": "Code",
+                    "type": "nominal"
+                },
+                "color": {
+                    "value": "black"
+                }
+            }
+        }
+    ],
+    "config": {
+        "view": {
+            "stroke": null
+        },
+        "axis": {
+            "labelFont": "sans-serif",
+            "titleFont": "sans-serif",
+            "titleFontSize":14
+        },
+        "legend": {
+            "labelFont": "sans-serif",
+            "titleFont": "sans-serif"
+        },
+        "header": {
+            "labelFont": "sans-serif",
+            "titleFont": "sans-serif"
+        },
+        "title": {
+            "font": "sans-serif",
+            "fontSize": 20,
+            "fontWeight": 600
+        }
+    }
+}

@@ -1,0 +1,200 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+    "width": 435,
+    "height": 450,
+    "title": "Risk factors that directly lead to death (1990-2019)",
+    "data": {
+        "url": "risk.csv"
+    },
+    "params": [
+        {
+            "name": "risk_selection",
+            "bind": {
+                "input": "select",
+                "options": [
+                null,
+                "Outdoor air pollution",
+                "High blood pressure",
+                "Diet high in sodium",
+                " Diet low in whole grains",
+                "Alcohol use ",
+                "Diet low in fruits",
+                "Unsafe water source",
+                "Secondhand smoke",
+                "Diet low in nuts and seeds",
+                "Diet low in vegetables",
+                "Low physical activity",
+                "Smoking",
+                "High fasting plasma glucose",
+                "Drug use",
+                "Vitamin A deficiency",
+                "Child stunting",
+                "Discontinued breastfeeding",
+                "Non-exclusive breastfeeding",
+                "Iron deficiency"
+
+                ],
+                "labels":[
+                "Show All",
+                "Outdoor air pollution",
+                "High blood pressure",
+                "Diet high in sodium",
+                " Diet low in whole grains",
+                "Alcohol use ",
+                "Diet low in fruits",
+                "Unsafe water source",
+                "Secondhand smoke",
+                "Diet low in nuts and seeds",
+                "Diet low in vegetables",
+                "Low physical activity",
+                "Smoking",
+                "High fasting plasma glucose",
+                "Drug use",
+                "Vitamin A deficiency",
+                "Child stunting",
+                "Discontinued breastfeeding",
+                "Non-exclusive breastfeeding",
+                "Iron deficiency"
+
+                ],
+                "name": "Risk Selection: "
+                }
+        }
+    ],
+    "transform": [
+       
+        {"filter": "risk_selection == null || datum.Risk == risk_selection"}
+
+    ],
+    "encoding": {
+        "x": {
+            "field": "Year",
+            "type": "temporal",
+            "title": "Year"
+        },
+        "y": {
+            "field": "Amount",
+            "type": "quantitative",
+            "title": "Total Deaths from Risk"
+        },
+        "color": {
+            "condition": {
+                "selection": "hover",
+                "field": "Risk",
+                "type": "nominal",
+                "legend": "Risk",
+                "scale": {"range":["#0000FF","#D2691E","#4B0082","#DAA520","#B22222","#008000","#E9967A","#1E90FF","#DC143C","#556B2F", "#696969","#8B0000","#00FFFF","DeepPink","Gold","Black","Lime","Purple"]}
+
+            },
+            "value": "grey"
+        },
+        "opacity": {
+            "condition": {
+                "selection": "hover",
+                "value": 1
+            },
+            "value": 0.2
+        }
+    },
+    "layer": [
+        {
+            "description": "transparent layer to make it easier to trigger selection",
+            "selection": {
+                "hover": {
+                    "type": "multi",
+                    "on": "mouseover",
+                    "empty": "all",
+                    "fields": [
+                        "Risk"
+                    ]
+                }
+            },
+            "mark": {
+                "type": "line",
+                "point": true,
+                "strokeWidth": 1,
+                "stroke": "transparent"
+            },
+            "encoding": {
+                "tooltip": [
+                    {
+                        "field": "Risk",
+                        "type": "nominal"
+                    },
+                    {
+                        "field": "Year",
+                        "type": "temporal",
+                        "timeUnit": "year",
+                        "title": "Year"
+                    },
+                    {
+                        "field": "Amount",
+                        "type": "quantitative",
+                        "title":"Total deaths from risk "
+                    }
+                ]
+            }
+        },
+        {
+            "mark": "line"
+        },
+        {
+            "encoding": {
+                "x": {
+                    "aggregate": "max",
+                    "field": "Year"
+                },
+                "y": {
+                    "aggregate": {
+                        "argmax": "Year"
+                    },
+                    "field": "Amount"
+                }
+            },
+            "layer": [
+                {
+                    "mark": {
+                        "type": "circle"
+                    }
+                },
+                {
+                    "mark": {
+                        "type": "square",
+                        "align":"left",
+                        "font": "Oxygen",
+                        "filled": true
+                    },
+                    "encoding": {
+                        "text": {
+                            "field": "Risk",
+                            "type": "nominal"
+                        }
+                    },"title": "Cause of Death"
+                }
+            ]
+        }
+    ],
+    "config": {
+        "view": {
+            "stroke": null
+        },
+        "axis": {
+            "labelFont": "sans-serif",
+            "titleFont": "sans-serif",
+            "titleFontSize":14
+        },
+        "legend": {
+            "labelFont": "sans-serif",
+            "titleFont": "sans-serif"
+        },
+        "header": {
+            "labelFont": "sans-serif",
+            "titleFont": "sans-serif"
+        },
+        "title": {
+            "font": "sans-serif",
+            "fontSize": 20,
+            "fontWeight": 600
+        }
+    }
+}
